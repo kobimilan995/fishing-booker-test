@@ -11,10 +11,8 @@ export default {
         },
 
         INCREMENT_GMT(state) {
-            console.log('ticking');
-            state.gmt = state.gmt.add(1, 'seconds')
-            state.gmtHuman = state.gmt.format('MMMM Do YYYY, h:mm:ss a')
-            console.log(state.gmt.format('MMMM Do YYYY, h:mm:ss a'));
+            state.gmt = state.gmt.add(1, 'seconds');
+            state.gmtHuman = state.gmt.format('MMMM Do YYYY, h:mm:ss a');
         }
     },
     actions: {
