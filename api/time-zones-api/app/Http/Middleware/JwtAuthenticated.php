@@ -21,6 +21,9 @@ class JwtAuthenticated
         $token = $request->bearerToken();
         try {
             $decoded = JWT::decode($token, $key, array('HS256'));
+            //check expired
+            //check role
+            //...
             return $next($request);
         } catch (\Exception $e) {
             return response()->json([

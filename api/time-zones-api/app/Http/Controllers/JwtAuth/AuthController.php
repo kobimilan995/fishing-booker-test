@@ -27,7 +27,7 @@ class AuthController extends Controller
             return response()->json([
                 'type' => 'error',
                 'errors' => $validation->errors()
-            ]);
+            ], 400);
         }
 
         $status = $this->store($request->all());
@@ -43,6 +43,8 @@ class AuthController extends Controller
             ]);
         }
     }
+
+
     //POST METHOD FOR LOGIN
     public function login(Request $request) {
         $validation = Validator::make($request->all(), [
@@ -54,7 +56,7 @@ class AuthController extends Controller
             return response()->json([
                 'type' => 'error',
                 'message' => $validation->errors()
-            ]);
+            ], 400);
         }
         $data = $this->findByEmail($request->email);
 
@@ -62,7 +64,7 @@ class AuthController extends Controller
             return response()->json([
                 'type' => 'error',
                 'message' => 'Email not found!'
-            ], 404);
+            ], 400);
         }
 
         $user = $data[0];
@@ -79,7 +81,7 @@ class AuthController extends Controller
         return response()->json([
             'type' => 'error',
             'message' => 'Password is incorrect'
-        ]);
+        ], 400);
     }
 
     //METHOD FOR GENERATING JWT
