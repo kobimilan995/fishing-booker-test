@@ -1,30 +1,20 @@
 <?php
 
 namespace App;
-
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
+use \Firebase\JWT\JWT;
+use Illuminate\Support\Facades\DB;
+use App\Traits\AuthTrait;
+class User
 {
-    use Notifiable;
+    use AuthTrait;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    private $id, $email, $firstName, $lastName, $password;
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+
+    public function __construct($email, $firstName, $lastName, $password) {
+        $this->email = $email;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->password = $password;
+    }
 }
