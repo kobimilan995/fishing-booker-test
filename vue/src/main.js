@@ -3,6 +3,8 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
+import moment from 'moment'
+window.moment = moment;
 import 'bootstrap/dist/css/bootstrap.min.css';
 Vue.use(VueRouter);
 Vue.use(Vuex);

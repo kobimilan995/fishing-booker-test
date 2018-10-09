@@ -1,8 +1,10 @@
 import auth from './modules/auth';
+import gmt from './modules/gmt';
 
 const storeObject = {
     modules: {
-        auth
+        auth,
+        gmt
     }
 };
 

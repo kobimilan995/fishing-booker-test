@@ -22,3 +22,10 @@ Route::post('/login', 'JwtAuth\AuthController@login');
 Route::get('/test', function() {
     return 'TEST';
 })->middleware('jwt.auth');
+
+
+Route::get('/gmdate', function() {
+    return [
+        'gmdate' => gmdate('d/m/Y, H:i:s')
+    ];
+});
