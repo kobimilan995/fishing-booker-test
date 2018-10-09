@@ -25,7 +25,8 @@ Route::get('/test', function() {
 
 
 Route::get('/gmdate', function() {
+    date_default_timezone_set('UTC');
     return [
-        'gmdate' => gmdate('d/m/Y, H:i:s')
+        'gmdate' => gmdate('m/d/Y, H:i:s')
     ];
 });

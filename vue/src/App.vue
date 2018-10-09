@@ -17,12 +17,16 @@ export default {
     },
 
     created() {
+
+    },
+
+    mounted() {
         axios.get('http://localhost:8000/api/gmdate').then(response => {
             console.log(response.data);
             this.$store.commit('gmt/SET_GMT', moment(response.data.gmdate));
             let self = this;
             function intervalFunction() {
-                self.$store.commit('gmt/SET_GMT', moment(this.gmdate).add(1, 'seconds'));
+                self.$store.commit('gmt/INCREMENT_GMT');
             }
 
             setInterval(intervalFunction, 1000);

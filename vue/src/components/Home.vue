@@ -9,8 +9,8 @@
 export default {
     computed: {
         gmdate() {
-            if(this.$store.state.gmt.gmt) {
-                return this.$store.state.gmt.gmt.format('MMMM Do YYYY, h:mm:ss a');
+            if(this.$store.state.gmt.gmtHuman) {
+                return this.$store.state.gmt.gmtHuman;
             } else {
                 return '';
             }
