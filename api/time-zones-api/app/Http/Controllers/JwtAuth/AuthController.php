@@ -30,7 +30,7 @@ class AuthController extends Controller
             ], 400);
         }
 
-        $status = $this->store($request->all());
+        $status = $this->store($request->all(), 'User');
         if($status) {
             return response()->json([
                 'type' => 'success',

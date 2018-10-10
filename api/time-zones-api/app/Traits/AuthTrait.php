@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\DB;
 
 trait AuthTrait {
 
-    public function store($credentials) {
+    public function store($credentials, $role_name) {
         $bcryptedPassword = bcrypt($credentials['password']);
 
-        $role_id = DB::select("SELECT role_id FROM roles where role_name = 'User'")[0]->role_id;
+        $role_id = DB::select("SELECT role_id FROM roles where role_name = '{$role_name}'")[0]->role_id;
         return DB::insert("INSERT INTO users (email, first_name, last_name, password, role_id) values ('{$credentials['email']}', '{$credentials['first_name']}', '{$credentials['last_name']}', '{$bcryptedPassword}', '{$role_id}')");
     }
 
