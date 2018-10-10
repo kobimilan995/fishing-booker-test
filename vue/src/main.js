@@ -4,10 +4,12 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
 import moment from 'moment'
+import Notifications from 'vue-notification'
 window.moment = moment;
 import 'bootstrap/dist/css/bootstrap.min.css';
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(Notifications);
 Vue.config.productionTip = false
 
 

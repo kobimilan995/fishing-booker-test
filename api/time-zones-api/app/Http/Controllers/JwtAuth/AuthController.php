@@ -55,10 +55,10 @@ class AuthController extends Controller
         if($validation->fails()) {
             return response()->json([
                 'type' => 'error',
-                'message' => $validation->errors()
+                'data' => $validation->errors()
             ], 400);
         }
-        $data = $this->findByEmail($request->email);
+        $data = $this->findByEmailWithRole($request->email);
 
         if(!$data) {
             return response()->json([
@@ -80,7 +80,7 @@ class AuthController extends Controller
         }
         return response()->json([
             'type' => 'error',
-            'message' => 'Password is incorrect'
+            'data' => ['errors' => ['Password is incorrect!']]
         ], 400);
     }
 
@@ -89,7 +89,8 @@ class AuthController extends Controller
         $key = env('SECRET_KEY');
         $payload = array(
           "email" => $user->email,
-          "exp" => time() + (60 * 60)
+          "role" => $user->role_name,
+          "exp" => time() + 15
         );
 
         return JWT::encode($payload, $key);

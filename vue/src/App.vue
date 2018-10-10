@@ -4,6 +4,7 @@
         <div class="container">
             <router-view></router-view>
         </div>
+        <notifications group="error" position="bottom left" />
     </div>
 </template>
 
@@ -17,12 +18,25 @@ export default {
     },
 
     created() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.auth.token;
 
+        axios.interceptors.response.use((response) => {
+            return response;
+        }, (error) => {
+            if(error.response.status == 401) {
+                localStorage.removeItem('auth-token');
+                localStorage.removeItem('auth-user');
+                this.$store.commit('auth/SET_TOKEN', '');
+                this.$store.commit('auth/SET_USER', {});
+                this.$router.push({name: 'login'});
+            }
+
+            return Promise.reject(error);
+        });
     },
 
     mounted() {
         axios.get('http://localhost:8000/api/gmdate').then(response => {
-            console.log(response.data);
             this.$store.commit('gmt/SET_GMT', moment(response.data.gmdate));
             let self = this;
             function intervalFunction() {

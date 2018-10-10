@@ -15,6 +15,14 @@ export default {
                 return '';
             }
         }
+    },
+
+    created() {
+        axios.get('http://localhost:8000/api/test').then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        });
     }
 }
 </script>

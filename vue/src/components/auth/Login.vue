@@ -28,16 +28,25 @@ export default {
 
     methods: {
         submitLoginRequest() {
-            console.log(this.credentials);
             axios.post('http://localhost:8000/api/login', this.credentials).then(response => {
                 let token = response.headers.authorization;
+                let user = response.data.user;
                 localStorage.setItem('auth-token', token);
-                this.$router.push({name: 'home'});
+                localStorage.setItem('auth-user', JSON.stringify(user));
                 this.$store.commit('auth/SET_TOKEN', token);
                 this.$store.commit('auth/SET_USER', response.data.user);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth-token');;
+                this.$router.push({name: 'home'});
             }).catch(error => {
+                console.log(error);
                 if(error.response.status == 400) {
-                    console.log(error.response.data);
+                    let {data} = error.response.data;
+                    this.$notify({
+                        group: 'error',
+                        title: 'Error',
+                        text: data[Object.keys(data)[0]][0],
+                        type: 'error'
+                    });
                 }
             });
         }

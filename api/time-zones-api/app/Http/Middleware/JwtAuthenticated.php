@@ -19,16 +19,24 @@ class JwtAuthenticated
     {
         $key = env('SECRET_KEY');
         $token = $request->bearerToken();
+        // return response()->json([
+        //     'token' => JWT::decode($token, $key, array('HS256'))
+        // ]);
         try {
-            $decoded = JWT::decode($token, $key, array('HS256'));
+            $decoded = (array) JWT::decode($token, $key, array('HS256'));
             //check expired
+            // if($decoded['exp'] < time()) {
+            //     return response()->json([
+            //         'type' => 'expired'
+            //     ]);
+            // }
             //check role
             //...
             return $next($request);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ], 402);
+            ], 401);
         }
     }
 }
