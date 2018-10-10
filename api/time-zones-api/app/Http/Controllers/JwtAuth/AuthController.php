@@ -26,7 +26,7 @@ class AuthController extends Controller
         if($validation->fails()) {
             return response()->json([
                 'type' => 'error',
-                'errors' => $validation->errors()
+                'data' => $validation->errors()
             ], 400);
         }
 
@@ -90,7 +90,7 @@ class AuthController extends Controller
         $payload = array(
           "email" => $user->email,
           "role" => $user->role_name,
-          "exp" => time() + 15
+          "exp" => time() + 60*60
         );
 
         return JWT::encode($payload, $key);
