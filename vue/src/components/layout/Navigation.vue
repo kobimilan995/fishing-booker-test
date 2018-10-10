@@ -17,11 +17,13 @@
                 </li>
             </ul>
             <ul class="navbar-nav my-lg-0" v-else>
-                <li class="nav-item">
-                    <h4 class="mr-4">{{authUser.first_name}} {{authUser.last_name}} - ({{authUser.role_name}})</h4>
+                <li class="nav-item" style="padding-top: 8px;">
+                    <h5 class="mr-4">{{authUser.first_name}} {{authUser.last_name}} - ({{authUser.role_name}})</h5>
+                </li>
+                <li class="nav-item" v-if="authUser.role_name == 'Admin'">
+                    <router-link to="/admin" class="nav-link">Admin dashboard</router-link>
                 </li>
                 <li class="nav-item">
-                    <!-- <a class="nav-link" href="#">Login</a> -->
                     <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
                 </li>
             </ul>

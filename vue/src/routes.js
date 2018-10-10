@@ -1,6 +1,7 @@
 import Login from './components/auth/Login.vue';
 import Register from './components/auth/Register.vue';
 import Home from './components/Home.vue';
+import AdminDashboard from './components/admin/Dashboard.vue';
 
 const routes = [
     {
@@ -25,6 +26,14 @@ const routes = [
         name: 'register',
         meta: {
             guest: true
+        }
+    },
+    {
+        path: '/admin',
+        component: AdminDashboard,
+        name: 'admin',
+        meta: {
+            admin: true
         }
     }
 ]

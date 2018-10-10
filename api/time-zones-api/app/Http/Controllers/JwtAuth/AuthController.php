@@ -30,7 +30,7 @@ class AuthController extends Controller
             ], 400);
         }
 
-        $status = $this->store($request->all(), 'User');
+        $status = $this->storeUser($request->all(), 'User');
         if($status) {
             return response()->json([
                 'type' => 'success',
@@ -72,6 +72,7 @@ class AuthController extends Controller
         if(Hash::check($request->password, $user->password)) {
             unset($user->password);
             $token = $this->genJWT($user);
+            $this->storeTokenData($token, $user, time()+10);
             return response()->json([
                 'type' => 'success',
                 'message' => 'Sucessfully logged in!',
@@ -88,9 +89,8 @@ class AuthController extends Controller
     private function genJWT($user) {
         $key = env('SECRET_KEY');
         $payload = array(
-          "email" => $user->email,
-          "role" => $user->role_name,
-          "exp" => time() + 60*60
+          "id" => $user->id,
+          "time" => time()
         );
 
         return JWT::encode($payload, $key);

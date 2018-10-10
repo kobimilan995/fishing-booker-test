@@ -39,7 +39,16 @@ router.beforeEach((to, from, next) => {
         else{
             next('/')
         }
-    }else {
+    } else if(to.matched.some(record => record.meta.admin)) {
+        let user = JSON.parse(localStorage.getItem('auth-user'));
+        if(user.role_name != 'Admin') {
+            next({
+                name: 'home'
+            })
+        } else {
+            next()
+        }
+    } else {
         next()
     }
 })

@@ -46,11 +46,23 @@ export default {
     methods: {
         submitRegisterRequest() {
             axios.post('http://localhost:8000/api/register', this.user).then(response => {
+                let {data} = response;
+                this.$notify({
+                    group: 'notify',
+                    title: 'Success',
+                    text: data.message,
+                    type: 'success'
+                });
                 this.$router.push({name: 'login'});
             }).catch(error => {
-                console.log(error);
                 if(error.response.status == 400) {
-                    console.log(error.response.data);
+                    let {data} = error.response.data;
+                    this.$notify({
+                        group: 'notify',
+                        title: 'Error',
+                        text: data[Object.keys(data)[0]][0],
+                        type: 'error'
+                    });
                 }
             });
         }

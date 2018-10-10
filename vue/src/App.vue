@@ -4,7 +4,7 @@
         <div class="container">
             <router-view></router-view>
         </div>
-        <notifications group="error" position="bottom left" />
+        <notifications group="notify" position="bottom left" />
     </div>
 </template>
 
@@ -29,6 +29,9 @@ export default {
                 this.$store.commit('auth/SET_TOKEN', '');
                 this.$store.commit('auth/SET_USER', {});
                 this.$router.push({name: 'login'});
+            } else if(error.response.status == 403){
+
+                this.$router.push({name: 'home'});
             }
 
             return Promise.reject(error);

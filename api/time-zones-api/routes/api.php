@@ -23,6 +23,10 @@ Route::get('/test', function() {
     return 'TEST';
 })->middleware('jwt.auth');
 
+Route::get('/admin/test', function() {
+    return 'TEST';
+})->middleware('jwt.auth', 'jwt.admin');
+
 
 Route::get('/gmdate', function() {
     date_default_timezone_set('UTC');

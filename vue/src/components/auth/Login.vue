@@ -30,6 +30,7 @@ export default {
         submitLoginRequest() {
             axios.post('http://localhost:8000/api/login', this.credentials).then(response => {
                 let token = response.headers.authorization;
+                // console.log(token);
                 let user = response.data.user;
                 localStorage.setItem('auth-token', token);
                 localStorage.setItem('auth-user', JSON.stringify(user));
@@ -37,12 +38,18 @@ export default {
                 this.$store.commit('auth/SET_USER', response.data.user);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth-token');;
                 this.$router.push({name: 'home'});
+                this.$notify({
+                    group: 'notify',
+                    title: 'Success',
+                    text: response.data.message,
+                    type: 'success'
+                });
             }).catch(error => {
                 console.log(error);
                 if(error.response.status == 400) {
                     let {data} = error.response.data;
                     this.$notify({
-                        group: 'error',
+                        group: 'notify',
                         title: 'Error',
                         text: data[Object.keys(data)[0]][0],
                         type: 'error'
